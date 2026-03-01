@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { ClerkProvider } from '@clerk/nextjs'
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 
 const geistSans = Geist({
@@ -27,11 +28,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <TooltipProvider>{children}</TooltipProvider>
+      <html lang="en" suppressHydrationWarning >
+        <body className="bg-white dark:bg-black transition-colors">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <TooltipProvider>{children}</TooltipProvider>
+          </ThemeProvider>
+          
         </body>
       </html>
     </ClerkProvider>
